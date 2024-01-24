@@ -1,0 +1,97 @@
+#!/bin/bash
+
+BlueCyan='\e[5;36m'
+Xark='\e[0m'
+ungu='\033[0;35m'
+yellow='\e[33m'
+WhiteBe='\e[5;37m'
+GreenBe='\e[5;32m'
+BlueCyan='\e[5;36m'
+Xark='\e[0m'
+clear
+
+function baris_panjang() {
+  echo -e "${BlueCyan} ——————————————————————————— ${Xark} "
+}
+# . 1 Membuat Account Vmess
+function Create_Account() {
+  add-vme
+}
+
+# . 2 Membuat Account Triall Vmess
+function Create_Trial() {
+  trial-vme
+}
+
+# . 3 Menghapus Account Vmess
+function Delete_Account() {
+  del-vme
+}
+
+# . 4 Melihat Daftar Member
+function List_Member() {
+  member-vme
+}
+
+# . 5  Me Renew Account
+function Renew_Account() {
+  renew-vme
+}
+
+# . 6 Melihat details Account
+function Check_Account() {
+  cek-vme
+}
+
+# . 7  Merubah Quota Usee Vmess
+function Changes_Limit_Quota() {
+  change-vmess-qouta
+}
+# . 8 Meeubah Ip Limit User Vmess
+function Change_Ip_Vmess() {
+  ganti-ip-vmess
+}
+
+# . 9 Merubah Limit Ip Xray
+function Changes_Limit_Xray() {
+  change-limit-xray
+}
+
+# . Banner Vmess
+function Banner() {
+  baris_panjang
+  echo -e "${ungu}           Vmess      ${Xark} "
+  baris_panjang
+}
+
+# . Daftar Menu Vmess
+function Menu_Features() {
+  baris_panjang
+  echo -e "${ungu}"
+  echo " 1. Create Vmess   "
+  echo " 2. Trial Vmess "
+  echo " 3. Delete Vmess    "
+  echo " 4. List Member "
+  echo " 5. Renew Account "
+  echo " 6. Monitor Vmess "
+  echo " 7. Change Limit Quota "
+  echo " 8. Change Ip Limit "
+  echo -e "${Xark}"
+  echo -e "${yellow} x. Exit ${Xark}"
+  baris_panjang
+}
+
+Banner
+Menu_Features
+read -p "Select [1/8 or x] :  " Ltt
+case $Ltt in
+1) clear ; Create_Account ;;
+2) clear ; Create_Trial ;;
+3) clear ; Delete_Account ;;
+4) clear ; List_Member ;;
+5) clear ; Renew_Account ;;
+6) clear ; Check_Account ;;
+7) clear ; Changes_Limit_Quota ;;
+8) clear ; Change_Ip_Vmess ;;
+*) exit ;;
+esac

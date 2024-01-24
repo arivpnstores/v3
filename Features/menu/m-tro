@@ -1,0 +1,85 @@
+#!/bin/bash
+
+BlueCyan='\e[5;36m'
+Xark='\e[0m'
+ungu='\033[0;35m'
+yellow='\e[33m'
+WhiteBe='\e[5;37m'
+GreenBe='\e[5;32m'
+BlueCyan='\e[5;36m'
+Xark='\e[0m'
+clear
+
+
+function baris_panjang() {
+  echo -e "${BlueCyan} ——————————————————————————— ${Xark} "
+}
+# . 1
+function Create_Account() {
+  add-tro
+}
+# . 2
+function Create_Trial() {
+  trial-tro
+}
+# . 3
+function Delete_Account() {
+  del-tro
+}
+# . 4
+function List_Member() {
+  member-tro
+}
+# . 5
+function Renew_Account() {
+  renew-tro
+}
+# . 6
+function Changes_Limit() {
+  ganti-ip-trojan
+}
+# . 7 
+function Check_Account() {
+  cek-tro
+}
+# . 8 
+function Check_Details_Account() {
+  user-tro
+}
+
+# Banner
+function Banner() {
+  baris_panjang
+  echo -e "${ungu}           TROJAN      ${Xark} "
+  baris_panjang
+}
+
+# Menu
+function Menu_Features() {
+  baris_panjang
+  echo -e "${ungu}"
+  echo " 1. Create trojan   "
+  echo " 2. Trial trojan "
+  echo " 3. Delete trojan    "
+  echo " 4. List Member "
+  echo " 5. Extend Account "
+  echo " 6. Change Limit IP "
+  echo " 7. Monitor Trojan"
+  echo -e "${Xark}"
+  echo -e "${yellow} x. Exit ${Xark}"
+  baris_panjang
+}
+
+Banner
+Menu_Features
+read -p "Select [1/8 or x] :  " Ltt
+case $Ltt in
+1) clear ; Create_Account ;;
+2) clear ; Create_Trial ;;
+3) clear ; Delete_Account ;;
+4) clear ; List_Member ;;
+5) clear ; Renew_Account ;;
+6) clear ; Changes_Limit ;;
+7) clear ; Check_Account ;;
+*) exit ;;
+esac

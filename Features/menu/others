@@ -1,0 +1,117 @@
+#/bin/bash
+BlueCyan='\e[5;36m'
+Xark='\e[0m'
+ungu='\033[0;35m'
+yellow='\e[33m'
+WhiteBe='\e[5;37m'
+GreenBe='\e[5;32m'
+BlueCyan='\e[5;36m'
+Xark='\e[0m'
+clear
+# Garis_Panjang
+function baris_panjang(){
+echo -e "${BlueCyan} ——————————————————————————— ${Xark} "
+}
+# Sc Credit Lunatic
+function Sc_Credit(){
+baris_panjang
+    echo -e "${ungu} Terimakasih Telah Menggunakan-"
+    echo -e "${ungu} Script Jelek   ARISCTUNNEL V3  ${Xark}"
+baris_panjang
+}
+
+# Bot Pointing
+function Bot_Pointing(){
+baris_panjang
+echo -e ""
+echo -e "${GreenBe}"
+echo -e "Hubungi Admin Terlebih Dahulu "
+echo -e "Untuk Melalukan Pembelian "
+echo -e "Bot Premium"
+echo -e "${Xark}"
+echo -e "${GreenBe}Whatsapp : 082240074362 ${Xark}"
+echo -e ""
+baris_panjang
+}
+
+# Bot_Regist
+function Bot_Regist(){
+baris_panjang
+echo -e ""
+echo -e "${GreenBe}"
+echo -e "Hubungi Admin Terlebih Dahulu "
+echo -e "Untuk Melalukan Pembelian "
+echo -e "Bot Premium"
+echo -e "${Xark}"
+echo -e "${GreenBe}Whatsapp : 082240074362 ${Xark}"
+echo -e ""
+baris_panjang
+}
+
+# Bot_Create_Vps
+function Bot_Create(){
+baris_panjang
+echo -e ""
+echo -e "${GreenBe}"
+echo -e "Hubungi Admin Terlebih Dahulu "
+echo -e "Untuk Melalukan Pembelian "
+echo -e "Bot Premium"
+echo -e "${Xark}"
+echo -e "${GreenBe}Whatsapp : 082240074362 ${Xark}"
+echo -e ""
+baris_panjang
+}
+# About
+function About(){
+baris_panjang
+echo -e "${WhiteB}"
+echo -e "Harga Sewa Script"
+echo -e "10.000 / 1 ip / 1 bulan"
+echo -e "25.000 / 1 ip / Lifetime"
+echo -e "35.000 / 2 ip / Lifetime"
+echo -e "50.000 / 3 ip / Lifetime"
+echo -e "65.000 / 4 ip / Lifetime"
+echo -e "85.000 / 5 i0 / Lifetime"
+echo -e "${Xark}"
+echo -e "${Yellow}"
+baris_panjang
+baris_panjang
+echo -e "Harga Open Source "
+echo -e "${Xark}"
+echo -e "${GreenBe}"
+echo -e "150.000 / Script jadi"
+echo -e "    Hak Milik"
+echo -e "${Xark}"
+baris_panjang
+Sc_Credit
+}
+
+# Banner 
+function Banner(){
+baris_panjang
+echo -e "${ungu}           OTHERS      ${Xark} "
+baris_panjang
+}
+# Daftar Menu
+function Menu_Features(){
+baris_panjang
+    echo -e "${ungu}"
+    echo " 1. Bot Tele Create Vps   "
+    echo " 2. Bot Tele Pointing Domain   "
+    echo " 3. Bot Tele Registrasi Ipvps    "
+    echo " 4. About"
+    echo -e "${Xark}"   
+    echo -e "${yellow} x. Exit ${Xark}"
+baris_panjang
+}
+
+Banner
+Menu_Features
+read -p "Select [1/4 or x] :  " Ltt
+case $Ltt in
+1) clear ; Bot_Create ;;
+2) clear ; Bot_Pointing ;;
+3) clear ; Bot_Regist ;;
+4) clear ; About ;;
+*) welcome ;;
+esac

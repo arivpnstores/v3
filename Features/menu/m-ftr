@@ -1,0 +1,89 @@
+#!/bin/bash
+
+BlueCyan='\e[5;36m'
+Xark='\e[0m'
+ungu='\033[1;35m'
+yellow='\e[33m'
+WhiteBe='\e[5;37m'
+GreenBe='\e[5;32m'
+BlueCyan='\e[5;36m'
+White="\033[97;1m"
+Green="\033[92;1m"
+Cyan="$\033[96;1m"
+Xark='\e[0m'
+clear
+
+function Create_Bot_Notif() {
+  create-bot-notif
+}
+
+function Bot_Create_Domain() {
+  Bot-Domain
+}
+function Registrasi_Ip_Vps() {
+echo -e "${Cyan} ANDA HARUS MENGHUBUNGI ADMIN-${Xark} "
+echo -e "${Cyan}      TERLEBIH DAHULU ${Xark} "
+echo -e "
+echo -e "${Cyan} Untuk Membeli source / Menyewa ${Xark} "
+echo ""
+echo -e ${White} whatsapp : 082240074362 ${Xark} "
+}
+
+# Banner 
+function Banner(){
+clear
+echo -e "\033[5;36m┌──────────────────────────────────────────────────────────┐\033[0m"
+echo -e "${White}                         MANAGERS                       ${Xark} "
+echo -e "\033[5;36m└──────────────────────────────────────────────────────────┘\033[0m"
+}
+
+
+function Menu_Lambofgod() {
+echo -e "\033[5;36m┌──────────────────────────────────────────────────────────┐\033[0m"
+echo -e "${Green}"
+echo -e " 1 .  Running Service    "  " 11 . Create Bot Notif "
+echo -e " 2 .  Restart Service    "  " 12 . Bot Create Domain"
+echo -e " 3 .  Monitoring         "  " 13 . Delete All Account Exp "
+echo -e " 4 .  Change Banner      "  " 14 . SpeedTest "
+echo -e " 5 .  Change Domain      "  " 15 . Clear Cache "
+echo -e " 6 .  Fixx Haproxy       "  " 16 . Clear Logs "
+echo -e " 7 .  Fixx Domain        "  " 17 . Auto Reboot "
+echo -e " 8 .  Auto Pointting     "  " 18 . Clear Cache File "
+echo -e " 9 .  Install Udp        "  " 19 . Others Manager "
+echo -e " 10 . Create Bot Tele    "  "  x . EXIT "
+echo -e "${Xark}"
+echo -e "\033[5;36m└──────────────────────────────────────────────────────────┘\033[0m"
+echo -e ""
+
+}
+
+function Select_Menu() {
+read -p "Select [1/20 or x] :  " Ltt
+case $Ltt in
+1) clear ; run ;;
+2) clear ; reset ;;
+3) clear ; gotop ;;
+4) clear ; nano /etc/banner.txt ;;
+5) clear ; change-domain ;;
+6) clear ; fixhap ;;
+7) clear ; fixcert ;;
+8) clear ; cf ;;
+9) clear ; UDEPE ;;
+10) clear ; bot-tele ;;
+11) clear ; Create_Bot_Notif ;;
+12) clear ; Bot_Create_Domain ;;
+13) clear ; xp ;;
+14) clear ; speedtest ;;
+15) clear ; clearcache ;;
+16) clear ; clearlog ;;
+17) clear ; autoreboot ;;
+18) clear ; delet-cache-file ;;
+19) clear ; others ;;
+*) welcome ;;
+esac
+}
+
+
+Banner
+Menu_Lambofgod
+Select_Menu
