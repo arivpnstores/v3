@@ -1,0 +1,306 @@
+#!/bin/bash
+######################################
+MYIP=$(curl -sS ipv4.icanhazip.com)
+######################################
+IPVPS=$(curl -s ipv4.icanhazip.com)
+ISP=$(cat /etc/xray/isp)
+CITY=$(cat /etc/xray/city)
+echo ""
+clear
+######################################
+# // INSTALL UDP CUSTOM
+UDPX="https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1S3IE25v_fyUfCLslnujFBSBMNunDHDk2' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1S3IE25v_fyUfCLslnujFBSBMNunDHDk2"
+######################################
+green="\033[1;32m"
+red="\033[1;31m"
+WH="\033[97m"
+# // Gettings Info
+function upp(){
+clear
+cd /usr/local/
+rm -rf sbin
+rm -rf /usr/bin/enc
+cd
+mkdir /usr/local/sbin
+dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
+red() { echo -e "\\033[32;1m${*}\\033[0m"; }
+clear
+fun_bar() {
+    CMD[0]="$1"
+    CMD[1]="$2"
+    (
+        [[ -e $HOME/fim ]] && rm $HOME/fim
+        ${CMD[0]} -y >/dev/null 2>&1
+        ${CMD[1]} -y >/dev/null 2>&1
+        touch $HOME/fim
+    ) >/dev/null 2>&1 &
+    tput civis
+    echo -ne "  \033[0;33mPlease Wait Loading \033[1;37m- \033[0;33m["
+    while true; do
+        for ((i = 0; i < 18; i++)); do
+            echo -ne "\033[0;32m#"
+            sleep 0.1s
+        done
+        [[ -e $HOME/fim ]] && rm $HOME/fim && break
+        echo -e "\033[0;33m]"
+        sleep 1s
+        tput cuu1
+        tput dl1
+        echo -ne "  \033[0;33mPlease Wait Loading \033[1;37m- \033[0;33m["
+    done
+    echo -e "\033[0;33m]\033[1;37m -\033[1;32m OK !\033[1;37m"
+    tput cnorm
+}
+res1() {
+    wget https://raw.githubusercontent.com/arivpnstores/v3/main/Features/menu.zip
+    wget -q -O /usr/bin/enc "https://raw.githubusercontent.com/arivpnstores/v3/main/enc/encrypt" ; chmod +x /usr/bin/enc
+    7z e -paskykenza123 menu.zip
+    unzip menu.zip
+    chmod +x menu/*
+    enc menu/*
+    mv menu/* /usr/local/sbin
+    rm -rf menu
+    rm -rf menu.zip
+    rm -rf update.sh
+}
+netfilter-persistent
+clear
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \e[1;97;101m          UPDATE SCRIPT       \e[0m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e ""
+echo -e "  \033[1;91m update script service\033[1;37m"
+fun_bar 'res1'
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e ""
+echo -e "\033[92mAnda akan du arahkan ke menu dalam 3 dtk..\033[0m"
+sleep 3
+menu
+}
+
+
+
+
+domain=$(cat /etc/xray/domain)
+RAM=$(free -m | awk 'NR==2 {print $2}')
+USAGERAM=$(free -m | awk 'NR==2 {print $3}')
+MEMOFREE=$(printf '%-1s' "$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')")
+LOADCPU=$(printf '%-0.00001s' "$(top -bn1 | awk '/Cpu/ { cpu = "" 100 - $8 "%" }; END { print cpu }')")
+MODEL=$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')
+CORE=$(printf '%-1s' "$(grep -c cpu[0-9] /proc/stat)")
+DATEVPS=$(date +'%d/%m/%Y')
+TIMEZONE=$(printf '%(%H:%M:%S)T')
+SERONLINE=$(uptime -p | cut -d " " -f 2-10000)
+clear
+######################################
+# // USERNAME IZIN IPP
+rm -f /usr/bin/user
+username=$(curl -sS https://raw.githubusercontent.com/arivpnstores/v3/main/REGIST | grep $MYIP | awk '{print $2}')
+echo "$username" >/usr/bin/user
+rm -f /usr/bin/e
+valid=$(curl -sS https://raw.githubusercontent.com/arivpnstores/v3/main/REGIST | grep $MYIP | awk '{print $3}')
+echo "$valid" > /usr/bin/e
+######################################
+# // DETAIL ORDER IZIN IP
+username=$(cat /usr/bin/user)
+oid=$(cat /usr/bin/ver)
+exp=$(cat /usr/bin/e)
+######################################
+clear
+# // DAYS LEFT
+d1=$(date -d "$valid" +%s)
+d2=$(date -d "$today" +%s)
+certifacate=$(((d1 - d2) / 86400))
+clear
+######################################
+# // VPS INFORMATION
+DATE=$(date +'%Y-%m-%d')
+datediff() {
+    d1=$(date -d "$1" +%s)
+    d2=$(date -d "$2" +%s)
+    echo -e "$COLOR1 $NC Expiry In   : $(( (d1 - d2) / 86400 )) Days"
+}
+mai="datediff "$Exp" "$DATE""
+######################################
+# // AKTIVATED & EXPIRED
+Info="\033[92mACTIVED\033[0m"
+Eror="\033[91mEXPIRED\033[0m"
+today=`date -d "0 days" +"%Y-%m-%d"`
+Exp1=$(curl -sS https://raw.githubusercontent.com/arivpnstores/v3/main/REGIST | grep $MYIP | awk '{print $3}')
+if [[ $today < $Exp1 ]]; then
+sts="${Info}"
+else
+sts="${Eror}"
+fi
+######################################
+echo -e "\e[32mloading...\e[0m"
+clear
+######################################
+# // GETTINGS SYSTEM
+uptime="$(uptime -p | cut -d " " -f 2-10)"
+cpu_usage1="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
+cpu_usage="$((${cpu_usage1/\.*} / ${coREDiilik:-1}))"
+cpu_usage+=" %"
+WKT=$(curl -s ipinfo.io/timezone )
+DAY=$(date +%A)
+DATE=$(date +%m/%d/%Y)
+DATE2=$(date -R | cut -d " " -f -5)
+IPVPS=$(curl -s ipinfo.io/ip )
+cname=$( awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo )
+cores=$( awk -F: '/model name/ {core++} END {print core}' /proc/cpuinfo )
+freq=$( awk -F: ' /cpu MHz/ {freq=$2} END {print freq}' /proc/cpuinfo )
+tram=$( free -m | awk 'NR==2 {print $2}' )
+uram=$( free -m | awk 'NR==2 {print $3}' )
+fram=$( free -m | awk 'NR==2 {print $4}' )
+clear
+ssh_service=$(/etc/init.d/ssh status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+dropbear_service=$(/etc/init.d/dropbear status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+haproxy_service=$(systemctl status haproxy | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+xray_service=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+nginx_service=$(systemctl status nginx | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+
+clear
+######################################
+# // RUNNING SSH
+######################################
+if [[ $ssh_service == "running" ]]; then 
+   status_ssh="${green}ON${NC}"
+else
+   status_ssh="${red}OFF${NC} "
+fi
+######################################
+# // RUNNING WEBSOCKET
+######################################
+ssh_ws=$( systemctl status ws | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
+if [[ $ssh_ws == "running" ]]; then
+    status_ws_epro="${green}ON${NC}"
+else
+    status_ws_epro="${red}OFF${NC} "
+fi
+######################################
+# RUNNING HAPROXY
+######################################
+if [[ $haproxy_service == "running" ]]; then 
+   status_haproxy="${green}ON${NC}"
+else
+   status_haproxy="${red}OFF${NC} "
+fi
+######################################
+# RUNNING XRAY
+######################################
+if [[ $xray_service == "running" ]]; then 
+   status_xray="${green}ON${NC}"
+else
+   status_xray="${red}OFF${NC} "
+fi
+######################################
+# RUNNING NGINX
+######################################
+if [[ $nginx_service == "running" ]]; then 
+   status_nginx="${green}ON${NC}"
+else
+   status_nginx="${red}OFF${NC} "
+fi
+######################################
+# RUNNING DROPBEAR
+######################################
+if [[ $dropbear_service == "running" ]]; then 
+   status_dropbear="${green}GOOD${NC}"
+else
+   status_dropbear="${red}CRAZY${NC} "
+fi
+
+# \\ Vless account //
+vlx=$(grep -c -E "^#& " "/etc/xray/config.json")
+let vla=$vlx/2
+# \\ Vmess account //
+vmc=$(grep -c -E "^### " "/etc/xray/config.json")
+let vma=$vmc/2
+# \\ Trojan account //
+ssh1="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
+trx=$(grep -c -E "^#! " "/etc/xray/config.json")
+let trb=$trx/2
+# \\ shadowsocks account //
+ssx=$(grep -c -E "^#!# " "/etc/xray/config.json")
+let ssa=$ssx/2
+
+######################################
+
+# // ----->>> BACKGROUND
+BG_GRN="\033[42;1m" # BG HIJAU
+BG_RED="\033[41;1;97;1m" # BG MERAH
+BG_CYN="\033[46;1m" # BG CYANN
+BG_BLU="\033[44;1m" # BG BIRU
+BG_PUR="\033[43;1m" # BG KUNING
+BG_WHT="\033[47;1m" # BG PUTIH
+
+White="\033[97;1m"
+WhiteBe="\033[5;37m"
+BlueCyan="\033[5;36m"
+Green="\033[92;1m"
+Yellow="\033[93;1m"
+Xark="\033[0m"
+
+# // ----->>> COLOR UNDER LINE
+function Lunatic_Banner() {
+clear
+echo -e "${White}┌─────────────────────────────────────────────────┐${Xark} "
+echo -e " ${BG_RED}                  ARISCTUNNEL V3                 ${Xark} "
+echo -e "${White}└─────────────────────────────────────────────────┘${Xark} "
+}
+
+
+
+function Service_System_Operating() {
+echo -e "${White}┌─────────────────────────────────────────────────┐${Xark} "
+echo -e " ${White} SYSTEM        : $MODEL     ${Xark} "
+echo -e " ${White} RAM           : $RAM MB    ${Xark} "
+echo -e " ${White} CPU           : $cpu_usage ${Xark} "
+echo -e " ${White} ISP           : $ISP       ${Xark} "
+echo -e " ${White} IPV           : $IPVPS     ${Xark} "
+echo -e " ${White} DOMAIN        : $domain    ${Xark} "
+echo -e "${White}└─────────────────────────────────────────────────┘${Xark}"
+
+}
+
+function Service_Status() {
+echo -e "${White}┌─────────────────────────────────────────────────┐${Xark} "
+echo -e "${White}|${Xark}${Yellow} PROXY ${Xark}  $status_haproxy  ${Xark}|${Yellow} NGINX  ${Xark} $status_nginx  ${Xark}|${Yellow} SSHWS  ${Xark} $status_ws_epro ${Xark}|  $status_dropbear  ${White}| ${Xark} "
+echo -e "${White}└─────────────────────────────────────────────────┘${Xark} "
+}
+
+
+function List_All_Account() {
+echo -e "${White}     ┌───────────────────────────────────────┐${Xark} "
+echo -e "${White}              SSH OPENVPN    :     $ssh1         ${Xark} " 
+echo -e "${White}              VLESS XRAY     :     $vla          ${Xark} " 
+echo -e "${White}              VMESS XRAY     :     $vma          ${Xark} " 
+echo -e "${White}              TRJAN XRAY     :     $trb          ${Xark} " 
+echo -e "${White}              SSR-LIBEV      :     $ssa          ${Xark} "   
+echo -e "${White}     └───────────────────────────────────────┘${Xark} "
+
+}
+
+function Details_Clients_Name() {
+echo -e "${White}   ┌───────────────────────────────────────────┐${Xark} "
+echo -e "${White}     VERSION     : 47.9 Libev.    ${Xark} "
+echo -e "${White}     CLIENTS     :${Xark}${Red} $username      ${Xark} "
+echo -e "${White}     Expiry      :${Xark}${Red} $certifacate Day ${Xark} "
+echo -e "${White}   └───────────────────────────────────────────┘${Xark} "
+}
+
+function Acces_Use_Command() {
+echo -e "${White} ————————————————————————————————————————————————— ${Xark} "
+echo -e "${White}             acces use${Xark} ${Yellow}☞${Xark} ${Green}menu${Xark} ${White} command ${Xark} " 
+echo -e "${White} ————————————————————————————————————————————————— ${Xark} "
+
+}
+
+
+Lunatic_Banner
+Service_System_Operating
+Service_Status
+List_All_Account
+Details_Clients_Name
+Acces_Use_Command

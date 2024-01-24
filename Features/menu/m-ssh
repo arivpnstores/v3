@@ -1,0 +1,131 @@
+#!/bin/bash
+
+BlueCyan='\e[5;36m'
+Xark='\e[0m'
+ungu='\033[0;35m'
+yellow='\e[33m'
+WhiteBe='\e[5;37m'
+GreenBe='\e[5;32m'
+BlueCyan='\e[5;36m'
+Xark='\e[0m'
+clear
+
+function baris_panjang() {
+  echo -e "${BlueCyan} ——————————————————————————— ${Xark} "
+}
+# . Create Ssh
+function Create_Ssh() {
+  add-ssh
+}
+
+# . Create Triall
+function Create_Trial() {
+  trial-ssh
+}
+
+# . Hapus akun ssh
+function Delete_Ssh(){
+  del-ssh
+}
+
+# . List Member ssh
+function List_Member() {
+  member-ssh
+}
+
+# . Auto Kill ssh
+function Auto_Kill() {
+  auto-kill
+}
+
+# . Check user Login
+function Check_Mullog() {
+  ceklim
+}
+
+# . Delete Expiry
+function Delete_Exp() {
+  delexp
+}
+
+# . Changes Limit
+function Changes_Limit() {
+  Lt-on-off
+}
+
+# . Limit On off
+function Limit_On_Off() {
+  limit-on-off
+}
+
+#. Renew Ssh
+function Renew_Ssh() {
+  renew-ssh
+}
+
+# . Lock Ssh
+function Lock() {
+  lock
+}
+
+# . Unlock Ssh
+function Unlock() {
+  unlock
+}
+
+# . Detail Akun Ssh
+function Details_Account(){
+  user-ssh
+}
+
+function Monitor_Ssh() {
+  cek-ssh
+}
+
+# . Banner Ssh
+function Banner() {
+  baris_panjang
+  echo -e "${ungu}           SSH      ${Xark} "
+  baris_panjang
+}
+
+function Menu_Features() {
+  baris_panjang
+  echo -e "${ungu}"
+  echo " 1. Create ssh   "
+  echo " 2. Trial ssh  "
+  echo " 3. Delete ssh    "
+  echo " 4. List Member "
+  echo " 5. Auto Kill "
+  echo " 6. Check MultiLogin "
+  echo " 7. Delete Expiry "
+  echo " 8. Changes Limit "
+  echo " 9. Renew Ssh "
+  echo " 10. Locked Ssh "
+  echo " 11. Unlock Ssh "
+  echo " 12. Limit On Off "
+  echo " 13. Monitor Ssh "
+  echo -e "${Xark}"
+  echo -e "${yellow} x. Exit ${Xark}"
+  baris_panjang
+}
+
+Banner
+Menu_Features
+read -p "Select [1/4 or x] :  " Ltt
+case $Ltt in
+1) clear ; Create_Ssh ;;
+2) clear ; Create_Trial ;;
+3) clear ; Delete_Ssh ;;
+4) clear ; List_Member ;;
+5) clear ; Auto_Kill ;;
+6) clear ; Check_Mullog ;;
+7) clear ; Delete_Exp ;;
+8) clear ; Changes_Limit ;;
+9) clear ; Renew_Ssh ;;
+10) clear ; Lock ;;
+11) clear ; Unlock ;;
+12) clear ; Limit_On_Off ;;
+13) clear ; Monitor_Ssh ;;
+*) exit ;;
+esac
