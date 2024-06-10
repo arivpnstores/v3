@@ -37,12 +37,11 @@ async def create_ssh(event):
 		async with bot.conversation(chat) as exp:
 			await event.respond("Choose Expiry Day",buttons=[
 [Button.inline(" 3 Day ","3"),
-Button.inline(" 3 Day ","3")],
-[Button.inline(" 7 Day ","7"),
-Button.inline(" 15 Day ","15")],
-[Button.inline(" 22 Day ","22"),
-Button.inline(" 30 Day ","30")],
-[Button.inline(" 60 Day ","60")]])
+Button.inline(" 7 Day ","7")],
+[Button.inline(" 15 Day ","15"),
+Button.inline(" 22 Day ","22")],
+[Button.inline(" 30 Day ","30"),
+Button.inline(" 60 Day ","60")]])
 			exp = exp.wait_event(events.CallbackQuery)
 			exp = (await exp).data.decode("ascii")
 		await event.edit("Processing.")
@@ -122,7 +121,7 @@ Button.inline(" 30 Day ","30")],
 		await event.answer("Akses Ditolak",alert=True)
 
 @bot.on(events.CallbackQuery(data=b'show-ssh'))
-async def show_ssh(event):[Button.inline(" 3 Day ","3"),
+async def show_ssh(event):
 	async def show_ssh_(event):
 		cmd = 'bot-member-ssh'.strip()
 		x = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
@@ -141,6 +140,110 @@ Show All SSH User
 		await show_ssh_(event)
 	else:
 		await event.answer("Access Denied",alert=True)
+
+
+@bot.on(events.CallbackQuery(data=b'trial-ssh'))
+async def trial_ssh(event):
+	async def trial_ssh_(event):
+		async with bot.conversation(chat) as exp:
+			await event.respond("Choose Expiry Minutes", buttons=[
+				[Button.inline("10 Menit", b"10"),
+				Button.inline("15 Menit", b"15")],
+				[Button.inline("30 Menit", b"30"),
+				Button.inline("60 Menit", b"60")]
+			])
+			exp = exp.wait_event(events.CallbackQuery)
+			exp = (await exp).data.decode("ascii")
+			
+		user = "trialX" + str(random.randint(100, 1000))
+		pw = "1"
+		
+		await event.edit("Processing.")
+		await event.edit("Processing..")
+		await event.edit("Processing...")
+		await event.edit("Processing....")
+		time.sleep(1)
+		await event.edit("`Processing Create Premium Account`")
+		time.sleep(1)
+		await event.edit("`Processing... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
+		time.sleep(1)
+		await event.edit("`Processing... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
+		time.sleep(1)
+		await event.edit("`Processing... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
+		time.sleep(1)
+		await event.edit("`Processing... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
+		time.sleep(1)
+		await event.edit("`Processing... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
+		time.sleep(1)
+		await event.edit("`Processing... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `")
+		time.sleep(1)
+		await event.edit("`Processing... 84%\n█████████████████████▒▒▒▒ `")
+		time.sleep(1)
+		await event.edit("`Processing... 100%\n█████████████████████████ `")
+		time.sleep(1)
+		await event.edit("`Wait.. Setting up an Account`")
+		
+		# Check if user already exists
+		check_user_cmd = f'id -u {user}'
+		try:
+			subprocess.check_output(check_user_cmd, shell=True)
+			user_exists = True
+		except subprocess.CalledProcessError:
+			user_exists = False
+		
+		if user_exists:
+			await event.respond("User Already Exist")
+		else:
+			# Proceed with user creation
+			cmd = f'useradd -e `date -d "{exp} minutes" +"%Y-%m-%d %H:%M:%S"` -s /bin/false -M {user} && echo "{pw}\n{pw}" | passwd {user} | tmux new-session -d -s {user} "trial trialssh {user} {exp}"'
+			try:
+				subprocess.check_output(cmd, shell=True)
+			except subprocess.CalledProcessError:
+				await event.respond("Failed to create user")
+			else:
+				msg = f"""
+━━━━━━━━━━━━━━━━━
+ 🟢 SSH  ACCOUNT 🟢
+━━━━━━━━━━━━━━━━━
+» Username         : `{user.strip()}`
+» Password         : `{pw.strip()}`
+━━━━━━━━━━━━━━━━━
+» Host             : `{DOMAIN}`
+» Host Slowdns     : `{HOST}`
+» Pub Key          : `{PUB}`
+» Port OpenSSH     : `443, 80, 22`
+» Port DNS         : `443, 53 ,22`
+» Port Dropbear    : `443, 109`
+» Port Dropbear WS : `443, 109`
+» Port SSH WS      : `80, 8080, 8081-9999`
+» Port SSH SSL WS  : `443`
+» Port SSL/TLS     : `222-1000`
+» Port OVPN WS SSL : `443`
+» Port OVPN SSL    : `443`
+» Port OVPN TCP    : `443, 1194`
+» Port OVPN UDP    : `2200`
+» Proxy Squid      : `3128`
+» BadVPN UDP       : `7100, 7300, 7300`
+━━━━━━━━━━━━━━━━━
+» Payload WSS      : `GET wss://BUG.COM/ HTTP/1.1[crlf]Host: {DOMAIN}[crlf]Upgrade: websocket[crlf][crlf]`
+━━━━━━━━━━━━━━━━━
+» OpenVPN WS SSL   : `https://{DOMAIN}:81/ws-ssl.ovpn`
+» OpenVPN SSL      : `https://{DOMAIN}:81/ssl.ovpn`
+» OpenVPN TCP      : `https://{DOMAIN}:81/tcp.ovpn`
+» OpenVPN UDP      : `https://{DOMAIN}:81/udp.ovpn`
+━━━━━━━━━━━━━━━━━
+» Save Link Account: `https://{DOMAIN}:81/ssh-{user.strip()}.txt`
+» Expired Until: `{exp} Minutes`
+"""
+				await event.respond(msg)
+
+	chat = event.chat_id
+	sender = await event.get_sender()
+	a = valid(str(sender.id))
+	if a == "true":
+		await trial_ssh_(event)
+	else:
+		await event.answer("Akses Ditolak", alert=True)
 		
 @bot.on(events.CallbackQuery(data=b'login-ssh'))
 async def login_ssh(event):
