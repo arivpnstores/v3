@@ -144,64 +144,53 @@ Show All SSH User
 
 @bot.on(events.CallbackQuery(data=b'trial-ssh'))
 async def trial_ssh(event):
-	async def trial_ssh_(event):
-		async with bot.conversation(chat) as exp:
-			await event.respond("Choose Expiry Minutes", buttons=[
-				[Button.inline("10 Menit", b"10"),
-				Button.inline("15 Menit", b"15")],
-				[Button.inline("30 Menit", b"30"),
-				Button.inline("60 Menit", b"60")]
-			])
-			exp = exp.wait_event(events.CallbackQuery)
-			exp = (await exp).data.decode("ascii")
-			
-		user = "trialX" + str(random.randint(100, 1000))
-		pw = "1"
-		
-		await event.edit("Processing.")
-		await event.edit("Processing..")
-		await event.edit("Processing...")
-		await event.edit("Processing....")
-		time.sleep(1)
-		await event.edit("`Processing Create Premium Account`")
-		time.sleep(1)
-		await event.edit("`Processing... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
-		time.sleep(1)
-		await event.edit("`Processing... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
-		time.sleep(1)
-		await event.edit("`Processing... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
-		time.sleep(1)
-		await event.edit("`Processing... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
-		time.sleep(1)
-		await event.edit("`Processing... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
-		time.sleep(1)
-		await event.edit("`Processing... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `")
-		time.sleep(1)
-		await event.edit("`Processing... 84%\n█████████████████████▒▒▒▒ `")
-		time.sleep(1)
-		await event.edit("`Processing... 100%\n█████████████████████████ `")
-		time.sleep(1)
-		await event.edit("`Wait.. Setting up an Account`")
-		
-		# Check if user already exists
-		check_user_cmd = f'id -u {user}'
-		try:
-			subprocess.check_output(check_user_cmd, shell=True)
-			user_exists = True
-		except subprocess.CalledProcessError:
-			user_exists = False
-		
-		if user_exists:
-			await event.respond("User Already Exist")
-		else:
-			# Proceed with user creation
-			cmd = f'useradd -e `date -d "{exp} minutes" +"%Y-%m-%d %H:%M:%S"` -s /bin/false -M {user} && echo "{pw}\n{pw}" | passwd {user} | tmux new-session -d -s {user} "trial trialssh {user} {exp}"'
-			try:
-				subprocess.check_output(cmd, shell=True)
-			except subprocess.CalledProcessError:
-				await event.respond("Failed to create user")
-			else:
-				msg = f"""
+    async def trial_ssh_(event):
+        async with bot.conversation(chat) as exp:
+            await event.respond("Choose Expiry Minutes", buttons=[
+                [Button.inline("10 Menit", b"10"),
+                Button.inline("15 Menit", b"15")],
+                [Button.inline("30 Menit", b"30"),
+                Button.inline("60 Menit", b"60")]
+            ])
+            exp = exp.wait_event(events.CallbackQuery)
+            exp = (await exp).data.decode("ascii")
+            
+        user = "trialX" + str(random.randint(100, 1000))
+        pw = "1"
+        
+        await event.edit("Processing.")
+        await event.edit("Processing..")
+        await event.edit("Processing...")
+        await event.edit("Processing....")
+        time.sleep(1)
+        await event.edit("`Processing Create Premium Account`")
+        time.sleep(1)
+        await event.edit("`Processing... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
+        time.sleep(1)
+        await event.edit("`Processing... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
+        time.sleep(1)
+        await event.edit("`Processing... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
+        time.sleep(1)
+        await event.edit("`Processing... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
+        time.sleep(1)
+        await event.edit("`Processing... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `")
+        time.sleep(1)
+        await event.edit("`Processing... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `")
+        time.sleep(1)
+        await event.edit("`Processing... 84%\n█████████████████████▒▒▒▒ `")
+        time.sleep(1)
+        await event.edit("`Processing... 100%\n█████████████████████████ `")
+        time.sleep(1)
+        await event.edit("`Wait.. Setting up an Account`")
+        
+        # Proceed with user creation without checking if the user exists
+        cmd = f'useradd -e `date -d "{exp} minutes" +"%Y-%m-%d %H:%M:%S"` -s /bin/false -M {user} && echo "{pw}\n{pw}" | passwd {user} | tmux new-session -d -s {user} "trial trialssh {user} {exp}"'
+        try:
+            subprocess.check_output(cmd, shell=True)
+        except subprocess.CalledProcessError:
+            await event.respond("Failed to create user")
+        else:
+            msg = f"""
 ━━━━━━━━━━━━━━━━━
  🟢 SSH  ACCOUNT 🟢
 ━━━━━━━━━━━━━━━━━
@@ -235,15 +224,16 @@ async def trial_ssh(event):
 » Save Link Account: `https://{DOMAIN}:81/ssh-{user.strip()}.txt`
 » Expired Until: `{exp} Minutes`
 """
-				await event.respond(msg)
+            await event.respond(msg)
 
-	chat = event.chat_id
-	sender = await event.get_sender()
-	a = valid(str(sender.id))
-	if a == "true":
-		await trial_ssh_(event)
-	else:
-		await event.answer("Akses Ditolak", alert=True)
+    chat = event.chat_id
+    sender = await event.get_sender()
+    a = valid(str(sender.id))
+    if a == "true":
+        await trial_ssh_(event)
+    else:
+        await event.answer("Akses Ditolak", alert=True)
+
 		
 @bot.on(events.CallbackQuery(data=b'login-ssh'))
 async def login_ssh(event):
