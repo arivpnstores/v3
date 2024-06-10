@@ -148,9 +148,9 @@ async def trial_ssh(event):
         async with bot.conversation(chat) as exp:
             await event.respond("Choose Expiry Minutes", buttons=[
                 [Button.inline("10 Menit", b"10"),
-                Button.inline("15 Menit", b"15")],
+                 Button.inline("15 Menit", b"15")],
                 [Button.inline("30 Menit", b"30"),
-                Button.inline("60 Menit", b"60")]
+                 Button.inline("60 Menit", b"60")]
             ])
             exp = exp.wait_event(events.CallbackQuery)
             exp = (await exp).data.decode("ascii")
@@ -183,14 +183,32 @@ async def trial_ssh(event):
         time.sleep(1)
         await event.edit("`Wait.. Setting up an Account`")
         
-        # Proceed with user creation without checking if the user exists
-        cmd = f'useradd -e `date -d "{exp} minutes" +"%Y-%m-%d %H:%M:%S"` -s /bin/false -M {user} && echo "{pw}\n{pw}" | passwd {user} | tmux new-session -d -s {user} "trial trialssh {user} {exp}"'
+        # Check if user already exists
+        check_user_cmd = f'id -u {user}'
         try:
-            subprocess.check_output(cmd, shell=True)
+            subprocess.check_output(check_user_cmd, shell=True)
+            user_exists = True
         except subprocess.CalledProcessError:
-            await event.respond("Failed to create user")
-        else:
-            msg = f"""
+            user_exists = False
+        
+        if not user_exists:
+            # Create the user if not exists
+            cmd_create_user = f'useradd -e `date -d "{exp} minutes" +"%Y-%m-%d %H:%M:%S"` -s /bin/false -M {user} && echo "{pw}\n{pw}" | passwd {user}'
+            try:
+                subprocess.check_output(cmd_create_user, shell=True)
+            except subprocess.CalledProcessError:
+                await event.respond("Failed to create user")
+                return
+        
+        # Proceed with the rest of the setup
+        cmd_setup = f'tmux new-session -d -s {user} "trial trialssh {user} {exp}"'
+        try:
+            subprocess.check_output(cmd_setup, shell=True)
+        except subprocess.CalledProcessError:
+            await event.respond("Failed to set up the account")
+            return
+        
+        msg = f"""
 ━━━━━━━━━━━━━━━━━
  🟢 SSH  ACCOUNT 🟢
 ━━━━━━━━━━━━━━━━━
@@ -224,7 +242,7 @@ async def trial_ssh(event):
 » Save Link Account: `https://{DOMAIN}:81/ssh-{user.strip()}.txt`
 » Expired Until: `{exp} Minutes`
 """
-            await event.respond(msg)
+        await event.respond(msg)
 
     chat = event.chat_id
     sender = await event.get_sender()
